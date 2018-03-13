@@ -1,23 +1,24 @@
 module Fastlane
   module Firebase
-  	
+
 
 		class Manager
 			def server_name
         "firebase.google.com"
       end
 
-			def login(username)
-				item = Security::InternetPassword.find(server: server_name(), account: username)
-        keychain_password = item.password if item
+			def login(username, password)
+        unless password
+          item = Security::InternetPassword.find(server: server_name(), account: username)
+          keychain_password = item.password if item
 
-        password = keychain_password
-        begin 
+          password = keychain_password
+        begin
           password = UI.password("Password for #{username}") unless password
-          
+
           #Api instance
           @api = Firebase::Api.new(username, password)
-          
+
           #Store password
           Security::InternetPassword.add(server_name(), username, password) unless keychain_password == password
 
@@ -46,7 +47,7 @@ module Fastlane
 
 				if project = projects.select {|p| p["projectNumber"] == project_number }.first then
 					project
-				else 
+				else
         	options = projects.map { |p| p["displayName"] }
         	index = select_index("Select project:", options)
         	projects[index]
@@ -73,7 +74,7 @@ module Fastlane
       def select_index(text, options)
 				selected = UI.select(text, options)
 				return options.index(selected)
-			end 
+			end
 		end
 	end
-end 
+end
