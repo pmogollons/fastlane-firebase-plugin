@@ -11,7 +11,7 @@ module Fastlane
         item = Security::InternetPassword.find(server: server_name(), account: username)
         keychain_password = item.password if item
 
-        password = keychain_password
+        password = keychain_password unless password
         begin
           password = UI.password("Password for #{username}") unless password
 
