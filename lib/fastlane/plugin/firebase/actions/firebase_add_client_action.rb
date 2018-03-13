@@ -4,6 +4,7 @@ module Fastlane
 
       def self.run(params)
         manager = Firebase::Manager.new
+        puts "Got value for password '#{params[:password]}'".red
         #Login
         api = manager.login(params[:username], params[:password])
 

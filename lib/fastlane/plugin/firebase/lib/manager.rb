@@ -8,6 +8,7 @@ module Fastlane
       end
 
 			def login(username, password)
+        puts "Got value for password2 '#{password}'".yellow
         item = Security::InternetPassword.find(server: server_name(), account: username)
         keychain_password = item.password if item
 
