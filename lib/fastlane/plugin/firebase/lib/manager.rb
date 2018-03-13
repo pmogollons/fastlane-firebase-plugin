@@ -8,13 +8,16 @@ module Fastlane
       end
 
 			def login(username, password)
-        puts "Got value for password2 '#{password}'".yellow
+        puts "Got value for password1 '#{password}'".yellow
         item = Security::InternetPassword.find(server: server_name(), account: username)
         keychain_password = item.password if item
 
         password = keychain_password unless password
+        puts "Got value for password2 '#{password}'".red
         begin
+          puts "Got value for password3 '#{password}'".blue
           password = UI.password("Password for #{username}") unless password
+          puts "Got value for password4 '#{password}'".green
 
           #Api instance
           @api = Firebase::Api.new(username, password)
